@@ -6,11 +6,18 @@ type CVAdditionalEntryData = {
 }
 
 class CVAdditionalEntry extends CVSimpleListSectionElement {
+    private additionalEntryData: any;
+
+    override toJSON(): any {
+        return this.additionalEntryData;
+    }
+
     constructor(data: CVAdditionalEntryData) {
         super({            
             "ELEMENT_TITLE": data.title,
             "ELEMENT_CONTENT": data.content,
         });
+        this.additionalEntryData = data;
     }
 }
 

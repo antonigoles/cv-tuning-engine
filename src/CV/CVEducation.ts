@@ -9,6 +9,20 @@ type CVEducationData = {
 }
 
 class CVEducation extends CVListSectionElements {
+    private educationData: any;
+
+    override toJSON(): any {
+        return this.educationData;
+    }
+
+    toText(): string {
+        let textLines = `${this.educationData.degree} at ${this.educationData.schoolName}\n`;
+        textLines += `${this.educationData.location}\n`
+        textLines += `${this.educationData.date}`
+        textLines += `- ${this.educationData.description}\n`;
+        return textLines;
+    }
+
     constructor(data: CVEducationData) {
         super({            
             "SECTION_HEADER_LEFT_TOP": data.schoolName,
@@ -19,6 +33,7 @@ class CVEducation extends CVListSectionElements {
 
             "SECTION_DESCRIPTION": data.description
         });
+        this.educationData = data;
     }
 }
 

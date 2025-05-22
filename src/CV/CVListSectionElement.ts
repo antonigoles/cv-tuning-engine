@@ -1,3 +1,4 @@
+import Serializable from '../Serializable.ts';
 import Renderable from './Renderable.ts';
 import { TemplatePaths, TemplateService } from './TemplateService.ts';
 
@@ -9,12 +10,16 @@ type CVListSectionElementData = {
     "SECTION_DESCRIPTION": string
 }
 
-class CVListSectionElements implements Renderable {    
+abstract class CVListSectionElements implements Renderable, Serializable {    
     private data: CVListSectionElementData;
     
     constructor(data: CVListSectionElementData) {
         this.data = data;
     }
+
+    abstract toJSON(): any;
+
+    abstract toText(): string;
     
     async renderFromTemplate(): Promise<string> {
         return await TemplateService.renderFromTemplate(

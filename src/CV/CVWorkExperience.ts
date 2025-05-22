@@ -9,6 +9,22 @@ type CVWorkExperienceData = {
 }
 
 class CVWorkExperience extends CVListSectionElements {
+    private workExperienceData: any;
+
+    override toJSON(): any {
+        return this.workExperienceData;
+    }
+
+    toText(): string {
+        let textLines = `${this.workExperienceData.jobTitle} at ${this.workExperienceData.company}\n`;
+        textLines += `${this.workExperienceData.location}\n`
+        textLines += `${this.workExperienceData.date}`
+        for (const bulletPoint of this.workExperienceData.bulletPoints) {
+            textLines += `- ${bulletPoint}\n`;
+        }
+        return textLines;
+    }
+
     constructor(data: CVWorkExperienceData) {
         super({            
             "SECTION_HEADER_LEFT_TOP": data.company,
@@ -20,6 +36,7 @@ class CVWorkExperience extends CVListSectionElements {
             "SECTION_DESCRIPTION": data
                 .bulletPoints.map( bulletPoint => `<li>${bulletPoint}</li>`).join(""),
         });
+        this.workExperienceData = data;
     }
 }
 

@@ -1,0 +1,73 @@
+Company Description
+
+Dropbox isn’t just a workplace—it’s a living lab for more enlightened ways of working. We're a global community of bold visionaries and resourceful doers who are shaping the future of Dropbox—and with it the future of work. Our Virtual First model combines the autonomy of a distributed workplace with the power of human connection, making space for both meaningful work and meaningful relationships. With our start-up mindset and enterprise-level opportunities, you can be who you are and grow into who you’re meant to be. Here, you can own your impact to make work more intuitive, joyful, and human—for you as a Dropboxer and for hundreds of millions of people worldwide. If you're ready to push boundaries—and yourself— Dropbox is ready for you.
+
+Team Description
+
+The Dropbox Engineering Team builds the technology that creates more enlightened ways of working for hundreds of millions of people. Every day, our platforms—including Dropbox Dash, Dropbox Sign, and our core sync engine—handle over a billion files for users worldwide, creating engineering challenges as great as the opportunity for impact. Our software engineering team uses a range of technologies to solve interesting problems, including Python, React, Node.js, JavaScript, MongoDB, PostgreSQL, and Android development. We think like a startup but build for an enterprise, exploring new possibilities that transform how people work. If you're excited about turning complex technical challenges into intuitive solutions at scale, join our Engineering team. Areas of work include Machine Learning Engineers, Infrastructure Engineer, Product SWE Frontend and Backend, Mobile Software Engineers (iOS and Android), Engineering Manager, Data Engineer, Software Development Engineer in Test, Security Engineering, Site Reliability Engineer, Technical Program Managers, Network Engineer, Datacenter Engineer, Technical Supply Chain Manager and more.
+
+Role Description
+
+As a Product Engineer at Dropbox for the Core Expansion team, you will play a pivotal role in shaping the future of collaboration and file sharing. Your responsibilities will revolve around developing and enhancing our suite of Dropbox Products to deliver exceptional user experiences. You will work closely with cross-functional teams, turning innovative ideas into robust, scalable, and user-friendly features.
+
+This year, Dropbox is on a mission to expedite the creation and implementation of AI-enable products by providing a comprehensive AI technology stack that facilitates speedy prototyping and reliable deployment of AI-driven functionalities.
+
+Our Engineering Career Framework is viewable by anyone outside the company and describes what’s expected for our engineers at each of our career levels. Check out our blog post on this topic and more here.
+
+Responsibilities
+
+Have a bias for action and deliver work of high quality
+Drive results by identifying impactful opportunities and ensuring long-term growth and customer impact.
+Inspire your team with a clear direction, fostering an environment where innovation flourishes and bold ideas are encouraged.
+Mentor more junior engineers on the team and be a partner to your EM in building a successful team.
+Cultivate a collaborative and inclusive culture, championing team members and upholding our company values.
+Ensure software and architecture excellence through quality feedback, risk mitigation, and alignment with technical strategy and business goals.
+
+Requirements
+
+5+ years of software engineering or related industry experience
+BS degree in Computer Science or related technical field involving coding (e.g., physics or mathematics), or equivalent technical experience
+Proven track record in identifying and delivering software solutions through a set of milestones spanning a specific product focus or a multi-component system
+Developed and shipped large-scale web applications with a user-centric mindset
+Proficiency in building user-facing software and supporting systems and libraries for web and/or desktop platforms
+
+Preferred Qualifications
+
+Full-Stack Development
+Prior experience with some of the following technologies: Python, AWS, Linux, distributed messaging, SQL/database optimization, Doctrine caching, OpenSearch/Elasticsearch, Kibana, Grafana, Sentry, Selenium/Playwright
+
+Compensation
+
+Dropbox applies increased tax deductible costs (50%) to remuneration earned by certain qualifying employees (to the extent an employee will be involved in the creation of the software as an “author”) for the transfer of copyrights, in accordance with the relevant provisions of the Personal Income Tax Act.
+
+Poland Pay Range
+
+256 700 zł—347 300 zł PLN
+
+The range listed above is the expected annual salary/OTE (On-Target Earnings) for this role, subject to change.
+
+Please note, OTE are for sales roles only.
+
+Salary/OTE is just one component of Dropbox’s total rewards package. All regular employees are also eligible for the corporate bonus program or a sales incentive (target included in OTE) as well as stock in the form of Restricted Stock Units (RSUs).
+
+Dropbox is a Virtual First company and is open to hiring candidates in all authorized locations.
+
+Benefits
+
+Dropbox is committed to investing in the holistic health and wellbeing of all Dropboxers and their families. Our benefits and perks programs include, but are not limited to:
+
+Competitive medical, dental and vision coverage*
+Retirement savings through a defined contribution pension or savings plan**
+Flexible PTO/Paid Time Off policy in addition to statutory holidays, allowing you time to unplug, unwind, and refresh
+Income Protection Plans: Life and disability insurance*
+Business Travel Protection: Travel medical and accident insurance*
+Perks Allowance to be used on what matters most to you, whether that’s wellness, learning and development, food & groceries, and much more
+Parental benefits including: Parental Leave, Fertility Benefits, Adoptions and Surrogacy support, and Lactation support
+Mental health and wellness benefits
+
+Additional Benefits Details Are Available Upon Request.
+
+Where group plans are not available, allowances may be provided
+Benefit, amount, and type are dependent on geographical location, based upon applicable law or company policy
+
+Dropbox is an equal opportunity employer. We are a welcoming place for everyone, and we do our best to make sure all people feel supported and connected at work. A big part of that effort is our support for members and allies of internal groups like Asians at Dropbox, BlackDropboxers, enABLE, TODOS (Latinx), Pridebox (LGBTQ), Vets at Dropbox, and Women at Dropbox.
