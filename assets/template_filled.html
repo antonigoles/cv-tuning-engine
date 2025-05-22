@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+    body {
+        width: 100%;
+        font-family: 'Times New Roman', Times, serif;
+        color: rgb(37, 37, 37);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        font-size: 9.5pt;
+    }
+    .cv-container {
+        width: 80%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+    #header {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+    }
+    #header>h1 {
+        font-size: 15pt;
+    }
+    #header>p {
+        margin-top: -12px;
+        font-size: 9.5pt;
+    }
+
+    .list-section {
+        margin-top: 20px;
+        width: 100%;
+    }
+
+    .list-section>.section-header {
+        width: 100%;
+        border-bottom: 1px solid black;
+        font-size: 12pt;
+        font-weight: bold;
+    }
+
+    .list-section>.section-content { 
+        width: 100%;
+    }
+    .list-section>.section-content>.list-section-element { 
+        margin-top: 15px;
+        width: 100%;
+    }
+    .list-section>.section-content>.list-section-element>.header { 
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    .list-section>.section-content>.list-section-element>.header>.left-block>.top {
+        font-weight: bold;
+    }
+
+    .description {
+        margin-top: 2px;
+        width: 100%;
+    }
+
+    .simple-list-section {
+        margin-top: 20px;
+        width: 100%;
+    }
+
+    .simple-list-section>.section-header {
+        width: 100%;
+        border-bottom: 1px solid black;
+        font-size: 12pt;
+        font-weight: bold;
+    }
+
+    .simple-list-section>.section-content {
+        margin-top: 15px;
+    }
+
+    </style>
+</head>
+<body>
+    <div class="cv-container">
+        <div id="header">
+            <h1>ANTONI GOLES</h1>
+            <p> Wrocław, Poland | +48 887 076 693 | antonigoles@gmail.com </p>
+        </div>
+        <div class="list-section">
+            <div class="section-header">WORK EXPIERIENCE</div>
+            <div class="section-content">
+                <div class="list-section-element">
+                    <div class="header">
+                        <div class="left-block">
+                            <div class="top">CENTRA</div>
+                            <div class="sub">Junior Backend Engineer</div>
+                        </div>
+                        <div class="right-block">
+                            <div class="top">Wrocław, Poland</div>
+                            <div class="sub">Mar 2024 - Now</div>
+                        </div>
+                    </div>
+                    <div class="description">
+                        <li>Actively taken part in development of discounts and tax calculations module with team of experienced Engineers</li>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="simple-list-section">
+            <div class="section-header">ADDITIONAL</div>
+            <div class="section-content">
+                <div class="simple-list-section-element">
+                    <b> Technical Skills: </b>
+                    JIRA, REST API, TDD, Git, React, MongoDB, SQL, PostgreSQL, Python, Kubernetes, Redis, RabbitMQ, Rancher, Grafana, OAuth, Deno, Node.js, JavaScript, TypeScript, PHP8, PHP7, Sentry, Docker, Basics of practical and theoretical Cyber Security, GraphQL, Symfony, Doctrine, OCaml, Basics of Compilers & Interpreters Architecture, Basics of Operating Systems, Basics of networking, knowledge of Advanced Numerical Methods, Basics of Machine Learning, Basics of Neural Networks, Knowledge of Algorithms and Data Structures, System Design Patterns, CUDA Programming, OpenGL Basics, Computer Systems Architecture, x86 Assembly, System V ABI
+                </div>
+                <div class="simple-list-section-element">
+                    <b> Languages: </b>
+                    Fluent in English, Native in Polish; Basic German, Russian and Ukrainian
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
