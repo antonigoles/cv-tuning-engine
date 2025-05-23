@@ -9,8 +9,11 @@ import CVEducationSection from './CVEducationSection.ts';
 
 class CV implements Renderable, Serializable {
     private sections: CVSection[] = [];
+    private summary: string;
 
-    constructor() {}
+    constructor(summary: string = "") {
+        this.summary = summary;
+    }
     
     async renderFromTemplate(): Promise<string> {
         let renderedSections: string = "";
@@ -21,6 +24,7 @@ class CV implements Renderable, Serializable {
         return await TemplateService.renderFromTemplate(
             TemplatePaths.BASE, 
             {
+                "CV_SUMMARY": this.summary, 
                 "CV_CONTENT": renderedSections
             }
         );
@@ -32,6 +36,7 @@ class CV implements Renderable, Serializable {
 
     public toJSON(): any {
         const json: any = {
+            summary: this.summary,
             workExperience: [],
             education: [],
             activities: [],
@@ -54,7 +59,7 @@ class CV implements Renderable, Serializable {
     }
 
     public toText(): string {
-        let result = "";
+        let result = this.summary + "\n\n";
         for (const section of this.sections) {
             result += section.toText() + "\n";
         }

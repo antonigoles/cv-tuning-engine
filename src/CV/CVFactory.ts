@@ -13,7 +13,8 @@ import CVWorkSection from "./CVWorkSection.ts";
 
 class CVFactory  {
     public static fromJSON(data: {[key: string]: any}): CV {
-        const cv = new CV();
+        const cv = new CV(data.summary ?? "");
+        
         if (data.workExperience && Array.isArray(data.workExperience)) {
             const workSection = new CVWorkSection();
             for (const workExpJSON of data.workExperience) {

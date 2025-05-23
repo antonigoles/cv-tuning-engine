@@ -1,6 +1,7 @@
 import Env from "../Core/Env.ts";
 import ObjectUtil from "../Core/ObjectUtil.ts";
 import CV from "../CV/CV.ts";
+import CVFactory from "../CV/CVFactory.ts";
 import Advert from "../Tuning/Advert.ts";
 import LLMDriver from "./LLMDriver.ts";
 
@@ -65,9 +66,11 @@ Sentences have to be written in first person active voice.
 DO NOT START SENTENCES WITH "I" TRY TO USE ACTIVE VERBS
 The text should be at most few sentences.
 
-Make sure your changes match information provided by CV
+Try not to repeat yourself.
 
-YOUR ANSWER SHOULD ONLY CONTAIN THE MODIFIED SENTENCE, ABSOLUTELY NOTHING ELSE THAN THAT
+Make sure your changes match information provided by CV.
+
+YOUR ANSWER SHOULD ONLY CONTAIN THE MODIFIED SENTENCE, ABSOLUTELY NOTHING ELSE THAN THAT.
 
 Advert:
 ${advert.getTextContent()}
@@ -81,23 +84,69 @@ ${fieldValue}
 Your revised version:
 `;
         
-        const completion = await (await fetch(Env.getOllamaURL(), {
+        const completion = await fetch(`${Env.getOllamaURL()}/api/generate`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
                 model: this.model, 
-                messages: [
-                    { role: "user", content: userPrompt }, 
-                ],
+                // messages: [
+                //     { role: "user", content: userPrompt }, 
+                // ],
+                prompt: userPrompt,
                 stream: false,
                 keep_alive: turnOffModelAfter ? 0 : 16
             })
-        })).json();
+        });
+
+        const result = await completion.json();
+        console.log(result.response)
+
         // console.log(completion.message.content)
-        if (!completion.message.content) {
+        if (!result.response) {
             throw new Error('Autocompletion could not be performed - empty response')
         }
-        return completion.message.content;
+        return result.response;
+    }
+
+    private async generateSummary(cvAsText: string, advert: Advert): Promise<string> {
+        const userPrompt = 
+`
+Generate short summary for this CV that I could put on top:
+${cvAsText}
+
+And base it mostly on advert below so that keywords and sentences match as much as possible for the ATS searchability:
+${advert}
+
+FOCUS ON WHAT THE RECRUITER IN THE ADVERT NEEDS AND MATCH IT WITH CV AS MUCH AS POSSIBLE.
+
+DONT FORGET ABOUT THE SOFT SKILLS.
+
+DO NOT TALK ABOUT THE NUMBERS, YOU CAN BE BROAD IN SUMMARY. 
+
+OMIT ANY FORMATTING ONLY RAW TEXT.
+
+REPOND ONLY WITH RESULT.
+`;
+        
+        const completion = await fetch(`${Env.getOllamaURL()}/api/generate`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                model: this.model, 
+                prompt: userPrompt,
+                stream: false,
+                keep_alive: 0
+            })
+        });
+
+        const result = await completion.json();
+        console.log(result.response)
+
+        // console.log(completion.message.content)
+        if (!result.response) {
+            throw new Error('Autocompletion could not be performed - empty response')
+        }
+        return result.response;
     }
 
     async sendToLLM(cv: CV, advert: Advert): Promise<string> {
@@ -114,6 +163,12 @@ Your revised version:
             ObjectUtil.modifyByPath(field, result, cvAsJson);
             console.log(`Field ${counter} out of ${fieldsToModify.length} finished`)
         }
+
+        console.log("Generating summary...")
+        const postTransformCV = CVFactory.fromJSON(cvAsJson);
+        const summary = await this.generateSummary(postTransformCV.toText(), advert);
+        ObjectUtil.modifyByPath("summary", summary, cvAsJson);
+        console.log("Done!")
 
         return JSON.stringify(cvAsJson, null, 4);
     }
