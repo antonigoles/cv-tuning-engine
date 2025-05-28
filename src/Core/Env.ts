@@ -24,6 +24,10 @@ class Env {
     public static getOllamaURL(): string {
         return Env.readVariableOrCrash('OLLAMA_URL')
     }
+
+    public static getModelName(): string {
+        return Env.readVariableOrCrash('LOCAL_MODEL')
+    }
 }
 
 export default Env;

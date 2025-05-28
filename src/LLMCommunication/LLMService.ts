@@ -1,3 +1,4 @@
+import Env from "../Core/Env.ts";
 import CV from "../CV/CV.ts";
 import Advert from "../Tuning/Advert.ts";
 import LLMDriver from "./LLMDriver.ts";
@@ -10,7 +11,7 @@ class LLMService {
     private llmDriver: LLMDriver;
 
     constructor() {
-        this.llmDriver = new OllamaByPartsDriver('gemma3:4b');
+        this.llmDriver = new OllamaByPartsDriver(Env.getModelName());
     }
 
     async sendToLLM(cv: CV, advert: Advert): Promise<string> {
