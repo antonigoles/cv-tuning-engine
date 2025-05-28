@@ -6,11 +6,13 @@ import CVEducationSection from "../../src/CV/CVEducationSection.ts";
 import CVEducation from "../../src/CV/CVEducation.ts";
 import CVAdditionalSection from "../../src/CV/CVAdditionalSection.ts";
 import CVAdditionalEntry from "../../src/CV/CVAdditionalEntry.ts";
+import CVFactory from "../../src/CV/CVFactory.ts";
+import CVRodoClause from "../../src/CV/CVRodoClause.ts";
 
 
 Deno.test("Export Service writes correctly", async () => {
     const exportService = new ExportService();
-    const cv = new CV();
+    const cv = CVFactory.fromJSON({});
     
     const workSection = new CVWorkSection();
     const educationSection = new CVEducationSection();
@@ -52,6 +54,10 @@ Deno.test("Export Service writes correctly", async () => {
     cv.addSection(workSection);
     cv.addSection(educationSection);
     cv.addSection(additionalSection);
+    cv.addSection(new CVRodoClause({
+        "COMPANY_NAME": "test123",
+        "PATTERN": "I allow {%COMPANY_NAME%} to test my data"
+    }));
 
 
     await exportService.exportHTMLFromCV(cv, "cv.html");

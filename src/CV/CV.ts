@@ -6,14 +6,19 @@ import CVWorkSection from './CVWorkSection.ts';
 import Renderable from './Renderable.ts';
 import { TemplatePaths, TemplateService } from './TemplateService.ts';
 import CVEducationSection from './CVEducationSection.ts';
+import CVRodoClause from './CVRodoClause.ts';
 
 class CV implements Renderable, Serializable {
     private sections: CVSection[] = [];
-    private summary: string;
 
-    constructor(summary: string = "") {
-        this.summary = summary;
-    }
+    constructor(
+        private name: string,
+        private lastName: string,
+        private location: string,
+        private phone: string,
+        private email: string,
+        private summary: string = ""
+    ) {}
     
     async renderFromTemplate(): Promise<string> {
         let renderedSections: string = "";
@@ -24,6 +29,11 @@ class CV implements Renderable, Serializable {
         return await TemplateService.renderFromTemplate(
             TemplatePaths.BASE, 
             {
+                "NAME": this.name,
+                "LAST_NAME": this.lastName,
+                "LOCATION": this.location,
+                "PHONE": this.phone,
+                "EMAIL": this.email,
                 "CV_SUMMARY": this.summary, 
                 "CV_CONTENT": renderedSections
             }
@@ -36,11 +46,16 @@ class CV implements Renderable, Serializable {
 
     public toJSON(): any {
         const json: any = {
+            name: this.name,
+            lastName: this.lastName,
+            location: this.location,
+            phone: this.phone,
+            email: this.email,
             summary: this.summary,
             workExperience: [],
             education: [],
             activities: [],
-            additional: []
+            additional: [],
         };
 
         for (const section of this.sections) {
@@ -50,6 +65,7 @@ class CV implements Renderable, Serializable {
             if (section instanceof CVEducationSection) type = 'education';
             if (section instanceof CVActivitiesSection) type = 'activities';
             if (section instanceof CVAdditionalSection) type = 'additional';
+            if (section instanceof CVRodoClause) type = 'RODOClause';
             if (type == '') {
                 console.log(`Error while serializing to JSON: unexpected section type`, section)
             }
@@ -59,7 +75,9 @@ class CV implements Renderable, Serializable {
     }
 
     public toText(): string {
-        let result = this.summary + "\n\n";
+        let result = `${this.name} ${this.lastName}\n`
+        result += `${this.location} | ${this.phone} | ${this.email}\n\n`
+        result += this.summary + "\n\n";
         for (const section of this.sections) {
             result += section.toText() + "\n";
         }

@@ -4,6 +4,7 @@ import CV from "../../src/CV/CV.ts";
 import ImportService from "../../src/CV/ImportService.ts";
 import { expect } from "jsr:@std/expect";
 import { assertNotEquals } from "jsr:@std/assert/not-equals";
+import CVFactory from "../../src/CV/CVFactory.ts";
 
 let cvFromFile: CV;
 let cvFromFileAsJSON: any;
@@ -37,7 +38,7 @@ Deno.test("Load CV, Convert to JSON and test if conversion was correct", async (
 })
 
 Deno.test("Test empty CV to JSON conversion", () => {
-    const cv = new CV();
+    const cv = CVFactory.fromJSON({});
     const cvAsJSON = cv.toJSON();
     assertNotEquals(cvAsJSON, null);
 })

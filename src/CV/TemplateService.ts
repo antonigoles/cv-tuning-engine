@@ -1,5 +1,6 @@
-const TEMPLATE_PATH=`/home/antoni/Pulpit/cv-tuning-engine/assets/template`
+import Env from "../Core/Env.ts";
 
+const TEMPLATE_PATH= `${Env.getAssetsPath()}/template`
 
 class TemplatePaths {
     public static BASE: string 
@@ -18,6 +19,9 @@ class TemplatePaths {
     
     public static SIMPLE_LIST_SECTION_ELEMENT: string 
     = `${TEMPLATE_PATH}/simple-list-section/simple-list-section-element.template.html`;
+
+    public static RODO_CLAUSE_SECTION: string
+    = `${TEMPLATE_PATH}/rodo-clause.template.html`
 }
 
 type TempalteVariables = { [key: string]: string }

@@ -13,7 +13,7 @@ Notes on this solution:
 */
 
 
-class OllamaByPartsDriver implements LLMDriver {
+class OllamaByPartsFreakyDriver implements LLMDriver {
     private model: string;
 
     constructor(model: string = 'phi') {
@@ -60,20 +60,22 @@ class OllamaByPartsDriver implements LLMDriver {
         const userPrompt = 
 `Your task is to modify fragment of text given by user from his CV 
 so that it matches the advert below as much as possible. 
-Do not change meaning of those sentences.
+You can change as much as you want.
 Sentences have to be written in first person active voice.
-DO NOT START SENTENCES WITH "I" MAKE SURE TO USE ACTIVE VERBS
+DO NOT START SENTENCES WITH "I" TRY TO USE ACTIVE VERBS
 The text should be at most few sentences.
 
 Try not to repeat yourself.
 
-Make sure your changes match information provided by CV.
+YOUR MAIN OBJECTIVE IS TO MAKE SURE THESE SENTENCES MATCH THE ADVERT.
 
 Prefer job titles from advert if they're close enough.
 
-YOU CAN LIE AS MUCH AS POSSIBLE IF IT SOUND BELIVEABLE.
+YOU CAN LIE AS MUCH AS POSSIBLE EVEN IF IT SOUND BARELY BELIVEABLE.
 
 TRY CHANGING AS MUCH AS POSSIBLE, MAKE ME SOUND LIKE A PERFECT FIT.
+
+YOU CAN LIE ON SKILLS AS MUCH AS POSSIBLE.
 
 YOUR ANSWER SHOULD ONLY CONTAIN THE MODIFIED SENTENCE, ABSOLUTELY NOTHING ELSE THAN THAT.
 
@@ -122,17 +124,12 @@ ${cvAsText}
 And base it mostly on advert below so that keywords and sentences match as much as possible for the ATS searchability:
 ${advert}
 
-FOCUS ON WHAT THE RECRUITER IN THE ADVERT NEEDS AND MATCH IT WITH CV AS MUCH AS POSSIBLE.
+FUCK TELLING THE TRUTH, MAKE ME SOUND LIKE A PERFECT MATCH TO THE ADVERT.
+YOU CAN LIE, YOU CAN SAY WHATEVER YOU WANT, AS LONG AS I GET THE JOB.
 
-DONT FORGET ABOUT THE SOFT SKILLS.
+OMIT UNNECESSARY FORMATING
 
-DO NOT TALK ABOUT THE NUMBERS, YOU CAN BE BROAD IN SUMMARY. 
-
-MAKE SURE TEXT YOU GENERATED MATCHES THE CV AND IS FACTUALLY CORRECT.
-
-OMIT ANY FORMATTING ONLY RAW TEXT.
-
-DO NOT INSERT ANY "[COMPANY'S NAME]" INTO THE SUMMARY
+DO NOT INTEGRATE COMPANY NAMES.
 
 REPOND ONLY WITH RESULT.
 `;
@@ -183,4 +180,4 @@ REPOND ONLY WITH RESULT.
     }
 }
 
-export default OllamaByPartsDriver;
+export default OllamaByPartsFreakyDriver;

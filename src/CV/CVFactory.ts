@@ -6,6 +6,7 @@ import CVAdditionalEntry from "./CVAdditionalEntry.ts";
 import CVAdditionalSection from "./CVAdditionalSection.ts";
 import CVEducation from "./CVEducation.ts";
 import CVEducationSection from "./CVEducationSection.ts";
+import CVRodoClause from "./CVRodoClause.ts";
 import CVWorkExperience from "./CVWorkExperience.ts";
 import CVWorkSection from "./CVWorkSection.ts";
 
@@ -13,7 +14,14 @@ import CVWorkSection from "./CVWorkSection.ts";
 
 class CVFactory  {
     public static fromJSON(data: {[key: string]: any}): CV {
-        const cv = new CV(data.summary ?? "");
+        const cv = new CV(
+            data.name ?? "No Name",
+            data.lastName ?? "",
+            data.location ?? "Nowhere",
+            data.phone ?? "+0 000 000 000",
+            data.email ?? "example@email.com",
+            data.summary ?? ""
+        );
         
         if (data.workExperience && Array.isArray(data.workExperience)) {
             const workSection = new CVWorkSection();
@@ -66,6 +74,14 @@ class CVFactory  {
                 }));
             }
             cv.addSection(additionalSection);
+        }
+
+        if (data.RODOClause) {
+            const rodo = new CVRodoClause({
+                "COMPANY_NAME": data.RODOClause.companyName,
+                "PATTERN": data.RODOClause.pattern,
+            })
+            cv.addSection(rodo);
         }
 
 

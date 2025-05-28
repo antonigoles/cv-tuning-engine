@@ -16,7 +16,7 @@
         font-size: 9.5pt;
     }
     .cv-container {
-        width: 80%;
+        width: 90%;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -85,13 +85,18 @@
         margin-top: 15px;
     }
 
+    .rodo-clause {
+        margin-top: 40px;
+        opacity: 0.5;
+    }
+
     </style>
 </head>
 <body>
     <div class="cv-container">
         <div id="header">
-            <h1>ANTONI GOLES</h1>
-            <p> Wrocław, Poland | +48 887 076 693 | antonigoles@gmail.com </p>
+            <h1>{%NAME%} {%LAST_NAME%}</h1>
+            <p> {%LOCATION%} | {%PHONE%} | {%EMAIL%} </p>
             <div style="text-align: center;">{%CV_SUMMARY%}</div>
         </div>
         {%CV_CONTENT%}
