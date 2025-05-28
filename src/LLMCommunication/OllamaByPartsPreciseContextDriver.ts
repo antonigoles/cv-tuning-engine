@@ -4,13 +4,8 @@ import CV from "../CV/CV.ts";
 import CVFactory from "../CV/CVFactory.ts";
 import Advert from "../Tuning/Advert.ts";
 import LLMDriver from "./LLMDriver.ts";
+import OllamaStreamer from "./OllamaStreamer.ts";
 
-/**
-Notes on this solution:
-- Is fast
-- Will never crash, worst case scenario are weird sentences
-- Lacks context for fields which makes it generate weird sentences
-*/
 
 class Field {
     constructor(
@@ -43,7 +38,7 @@ class ContextBlock {
     }
 }
 
-class OllamaByPartsDriver implements LLMDriver {
+class OllamaByPartsPreciseContextDriver implements LLMDriver {
     private model: string;
 
     constructor(model: string = 'phi') {
@@ -112,7 +107,6 @@ class OllamaByPartsDriver implements LLMDriver {
     private async tuneFromContextBlock(
         contextBlock: ContextBlock, 
         advert: Advert, 
-        turnOffModelAfter:boolean=false
     ): Promise<Field[]> {
         const userPrompt = (fieldValue: string) =>  
 `You're a friendly recruitment specialist tasked 
@@ -120,7 +114,7 @@ with helping the user tailor his CV to a specific job advert
 so that it matches the advert as much as possible.
 
 You'll be provided with context, advert and 
-a piece of text that should be modified based on this context to match advert as much as possible.
+a piece of list of texts that should be modified based on this context to match advert as much as possible.
 
 Sentences have to be written in first person active voice.
 DO NOT START SENTENCES WITH "I" MAKE SURE TO USE ACTIVE VERBS
@@ -132,11 +126,15 @@ Make sure your changes match information provided by the context
 
 Switch job titles in context from those in the advert if they sound close enough.
 
-YOU CAN LIE AS MUCH AS POSSIBLE IF IT SOUND BELIVEABLE.
+DO NOT EDIT THE PATH FIELD, ONLY CONTENT
 
-TRY CHANGING AS MUCH AS POSSIBLE, MAKE THE USER SOUND LIKE A PERFECT FIT.
+DO NOT LIE, DO NOT MENTION THINGS THAT DID NOT HAPPEN IN THE CONTEXT
 
-YOUR ANSWER SHOULD ONLY CONTAIN THE MODIFIED SENTENCE, ABSOLUTELY NOTHING ELSE THAN THAT.
+DO NOT GO "OVER THE BOARD" MAKE SURE WHAT YOU'RE WRITING IS ALIGNED WITH THE CONTEXT AND YOU'RE NOT GOING INSANE
+
+MAKE SURE TOOLS MENTIONED IN YOUR EDITS WERE ACTUALLY USED IN THE CONTEXT YOU'VE BEEN GIVEN
+
+YOUR ANSWER SHOULD ONLY CONTAIN JSON STYLE ARRAY OF MODIFIED SENTENCES IN THE SAME FORMAT AS THEY WERE PASSED, ABSOLUTELY NOTHING ELSE THAN THAT.
 
 Advert:
 ${advert.getTextContent()}
@@ -144,37 +142,24 @@ ${advert.getTextContent()}
 Full Context for this field:
 ${contextBlock.getContext()}
 
-Sentence to edit:
+Sentences to edit:
 ${fieldValue}
 
 Your revised version:
 `;
         const edits: Field[] = [];
-        for (const field of contextBlock.getFields()) {
-            const completion = await fetch(`${Env.getOllamaURL()}/api/generate`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    model: this.model, 
-                    // messages: [
-                    //     { role: "user", content: userPrompt }, 
-                    // ],
-                    prompt: userPrompt(field.content),
-                    stream: false,
-                    keep_alive: turnOffModelAfter ? 0 : 16
-                })
-            });
 
-            const result = await completion.json();
-            console.log(result.response)
+        const fieldsParsed = contextBlock.getFields().map( (e: Field) => JSON.stringify(e, null, 4)).join(',')
 
-            // console.log(completion.message.content)
-            if (!result.response) {
-                throw new Error('Autocompletion could not be performed - empty response')
-            }
-            edits.push(new Field(field.path, result.response));
-        }
-        
+        const completion = await OllamaStreamer.generateFromModel(this.model, userPrompt(`[${fieldsParsed}]`));
+
+        const cleanedData = JSON.parse(completion.replaceAll(/<think>[\s\S]*?<\/think>/g, ''))
+
+        console.log(cleanedData)
+
+        for (const field of cleanedData) {
+            edits.push(new Field(field['path'], field['content']))
+        }        
 
         return edits;
     }
@@ -182,7 +167,7 @@ Your revised version:
     private async generateSummary(cvAsText: string, advert: Advert): Promise<string> {
         const userPrompt = 
 `
-Generate short summary for this CV that I could put on top:
+Generate short summary that I could put on top of this CV:
 ${cvAsText}
 
 And base it mostly on advert below so that keywords and sentences match as much as possible for the ATS searchability:
@@ -200,28 +185,12 @@ OMIT ANY FORMATTING ONLY RAW TEXT.
 
 DO NOT INSERT ANY "[COMPANY'S NAME]" INTO THE SUMMARY
 
-REPOND ONLY WITH RESULT.
-`;
-        
-        const completion = await fetch(`${Env.getOllamaURL()}/api/generate`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                model: this.model, 
-                prompt: userPrompt,
-                stream: false,
-                keep_alive: 0
-            })
-        });
+REPOND ONLY WITH THE SUMMARY, DO NOT ADD ANYTHING ELSE
+`;        
+        const completion = await OllamaStreamer.generateFromModel(this.model, userPrompt);
+        const cleanedData = completion.replaceAll(/<think>[\s\S]*?<\/think>/g, '');
 
-        const result = await completion.json();
-        console.log(result.response)
-
-        // console.log(completion.message.content)
-        if (!result.response) {
-            throw new Error('Autocompletion could not be performed - empty response')
-        }
-        return result.response;
+        return cleanedData;
     }
 
     async sendToLLM(cv: CV, advert: Advert): Promise<string> {
@@ -232,7 +201,7 @@ REPOND ONLY WITH RESULT.
         let counter = 0;
         for (const block of contextBlocks) {
             counter++;
-            const reseditedFields = await this.tuneFromContextBlock(block, advert, counter == contextBlocks.length);
+            const reseditedFields = await this.tuneFromContextBlock(block, advert);
             for (const editedField of reseditedFields) {
                 ObjectUtil.modifyByPath(editedField.path, editedField.content, cvAsJson);
             }
@@ -249,4 +218,4 @@ REPOND ONLY WITH RESULT.
     }
 }
 
-export default OllamaByPartsDriver;
+export default OllamaByPartsPreciseContextDriver;

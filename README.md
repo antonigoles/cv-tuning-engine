@@ -18,6 +18,7 @@ EXPORTS_FOLDER_PATH=
 ASSETS_FOLDER_PATH=
 OPEN_AI_TOKEN=
 OLLAMA_URL=http://localhost:11434 # This value should be universal
+LOCAL_MODEL=qwen3:14b-q4_K_M # this model might actually be a little big too big for a single mid tier gpu
 ```
 
 **1.** Install ollama cli from https://ollama.com/ 
