@@ -50,7 +50,7 @@ class TuningService {
         `
     }
 
-    public async tuneCVWithAdvert(cv: CV, advert: Advert): Promise<CV> {
+    public async tuneCV(cv: CV, advert: Advert|null): Promise<CV> {
         const result = await this.llmService.sendToLLM(cv, advert);
         const resultAsJSON = JSON.parse(result);
         const newCV = CVFactory.fromJSON(resultAsJSON);

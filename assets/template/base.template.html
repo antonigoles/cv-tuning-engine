@@ -93,11 +93,11 @@
     </style>
 </head>
 <body>
-    <div class="cv-container">
-        <div id="header">
-            <h1>{%NAME%} {%LAST_NAME%}</h1>
-            <p> {%LOCATION%} | {%PHONE%} | {%EMAIL%} </p>
-            <div style="text-align: center;">{%CV_SUMMARY%}</div>
+    <div class="cv-container" contenteditable="true">
+        <div id="header" contenteditable="true">
+            <h1 contenteditable="true">{%NAME%} {%LAST_NAME%}</h1>
+            <p contenteditable="true"> {%LOCATION%} | {%PHONE%} | {%EMAIL%} </p>
+            <div contenteditable="true" style="text-align: center;">{%CV_SUMMARY%}</div>
         </div>
         {%CV_CONTENT%}
     </div>

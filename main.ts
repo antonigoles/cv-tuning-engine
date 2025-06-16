@@ -31,16 +31,17 @@ if (flags["html-from-json"]) {
 }
 
 if (flags["tune-json"]) {
-    if (!flags["out"] || !flags["with-advert"]) {
+    if (!flags["out"]) {
         IncorrectUsage("--tune-json flag requires --out and --with-advert flag");
     } else {
         const importService = new ImportService();
         const exportService = new ExportService();
         const tuningService = new TuningService();
         const cv = await importService.importCVFromJSONFile(flags["tune-json"]);
-        const advert = await Advert.fromPath(flags["with-advert"])
-        const newCV = await tuningService.tuneCVWithAdvert(cv, advert);
-        await exportService.exportHTMLFromCV(newCV, "", flags["out"]);
+        const advert = flags["with-advert"] ? await Advert.fromPath(flags["with-advert"]) : null;
+        const newCV = await tuningService.tuneCV(cv, advert);
+        await Deno.writeTextFile(flags["out"]+'/cv.json', JSON.stringify(newCV.toJSON(), null, 4))
+        await exportService.exportHTMLFromCV(newCV, "", flags["out"]+'/cv.html');
     }
     Deno.exit();
 }
