@@ -32,7 +32,7 @@ if (flags["html-from-json"]) {
 
 if (flags["tune-json"]) {
     if (!flags["out"]) {
-        IncorrectUsage("--tune-json flag requires --out and --with-advert flag");
+        IncorrectUsage("--tune-json flag requires --out flag");
     } else {
         const importService = new ImportService();
         const exportService = new ExportService();
